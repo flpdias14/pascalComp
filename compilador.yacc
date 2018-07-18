@@ -17,10 +17,10 @@ extern tabela_simbolo* tabela;
 %token 	<dval> REAL
 %token	<ival> ID
 %token 	<ival> TYPE 
-%token PROGRAM VAR READLN WRITELN 
+%token PROGRAM VAR READLN WRITELN IF ELSE
 /* Declaracao dos operadores. A precedência é definida de baixo para cima. */
 %left '+' '-'
-%left '*' '/'
+%left '*' '/' '%'
 /* precedencia do menos unário em uma expr */
 %nonassoc UMINUS
 
@@ -34,7 +34,7 @@ program:
 	;
 /* Regra para reconhececimento de um statement */
 stmt:
-	TYPE ID ';'		{ 
+	VAR ID ':' TYPE ';'		{ 
 				// localiza o simbolo na tabela de simbolos pelo codigo
 				simbolo* simbolo = localizar_simbolo_codigo(tabela, $2);
 				//Setar o tipo da variável simbolo.tipo = $1				
@@ -60,7 +60,7 @@ stmt:
 ;
 expr:
 	INTEGER {$$ = $1;}
-	| ID	{// procurar o símbolo na tabela a partir do $1
+	| ID {// procurar o símbolo na tabela a partir do $1
 		simbolo* simbolo = localizar_simbolo_codigo(tabela, $1);
 		$$ = (simbolo->tipo == COD_INT ? simbolo->val.dval : simbolo->val.fval);
 		}
@@ -69,6 +69,7 @@ expr:
 	| expr '-' expr	{$$ = $1 - $3;}
 	| expr '*' expr	{$$ = $1 * $3;}
 	| expr '/' expr	{$$ = $1 / $3;}
+	| expr '%' expr	{$$ = $1 % $3;}
 	| '(' expr ')'	{$$ = $2;}
 	| '-' expr %prec UMINUS	{$$ = -$2;}
 	; 

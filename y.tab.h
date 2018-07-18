@@ -53,7 +53,9 @@ extern int yydebug;
     VAR = 263,
     READLN = 264,
     WRITELN = 265,
-    UMINUS = 266
+    IF = 266,
+    ELSE = 267,
+    UMINUS = 268
   };
 #endif
 /* Tokens.  */
@@ -65,7 +67,9 @@ extern int yydebug;
 #define VAR 263
 #define READLN 264
 #define WRITELN 265
-#define UMINUS 266
+#define IF 266
+#define ELSE 267
+#define UMINUS 268
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -78,7 +82,7 @@ union YYSTYPE
 	double dval;	
 
 
-#line 82 "y.tab.h" /* yacc.c:1909  */
+#line 86 "y.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

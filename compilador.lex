@@ -11,7 +11,7 @@ char* msg_erro = "caractere invalido: ";
 letra	[A-Za-z]
 digito	[0-9]
 id	({letra}|_)({letra}|{digito})*
-operadores	[-+*\/=(\)\n;]
+operadores	[-+*\/=%(\)\n;><]
 %%
 var 	{
 			return VAR;
@@ -26,14 +26,23 @@ integer { 	// passa o codigo do tipo inteiro para o yacc
 
 real 	{ 
 			// passa o codigo do tipo float para o yacc
-			// yylval.ival = COD_FLOAT; 
-			// return TYPE;
+			yylval.ival = COD_FLOAT; 
+			return TYPE;
 		}
 writeln	{	
 			return WRITELN;
 		}
+
 readln 	{
 			return READLN;
+		}
+
+if		{
+			return IF;
+		}
+
+else	{
+			return ELSE;
 		}
 {digito}+"."{digito}+	{yylval.dval = atof(yytext); return REAL;}
 

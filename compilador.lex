@@ -53,6 +53,9 @@ if		{
 else	{
 			return ELSE;
 		}
+:=		{
+			return ATTR;
+		}
 {numero}	{ yylval.ival = instalar_numero(tabela_numeros, yytext);
 			return NUMBER;
 			}

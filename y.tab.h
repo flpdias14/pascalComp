@@ -56,7 +56,8 @@ extern int yydebug;
     WRITELN = 266,
     IF = 267,
     ELSE = 268,
-    UMINUS = 269
+    ATTR = 269,
+    UMINUS = 270
   };
 #endif
 /* Tokens.  */
@@ -71,7 +72,8 @@ extern int yydebug;
 #define WRITELN 266
 #define IF 267
 #define ELSE 268
-#define UMINUS 269
+#define ATTR 269
+#define UMINUS 270
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
@@ -83,7 +85,7 @@ union YYSTYPE
 	int ival;
 	double dval;	
 
-#line 87 "y.tab.h" /* yacc.c:1909  */
+#line 89 "y.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

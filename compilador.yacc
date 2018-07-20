@@ -18,7 +18,7 @@ extern tabela_simbolo* tabela_numeros;
 %token 	<ival> NUMBER
 %token	<ival> ID
 %token 	<ival> TYPE 
-%token PROGRAM VAR READLN WRITELN IF ELSE 
+%token PROGRAM VAR READLN WRITELN IF ELSE ATTR
 /* Declaracao dos operadores. A precedência é definida de baixo para cima. */
 %left '+' '-'
 %left '*' '/' '%'
@@ -67,11 +67,11 @@ stmt:
   				(simbolo->tipo == COD_INT ? 
 					printf("%s = %d\n",simbolo->lexema, simbolo->val.dval): 
 					printf("%s = %f\n",simbolo->lexema, simbolo->val.fval));
-								}
+							}
 	;
 
 attr:
-	ID ":=" expr ';'	{
+	ID ATTR expr ';'	{
 
 				// localiza o simbolo na tabela de simbolos pelo codigo
 				simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, $1);
@@ -85,7 +85,7 @@ expr:
 	NUMBER {
 			simbolo* simbolo = localizar_simbolo_codigo(tabela_numeros, $1);
 			$$ = simbolo->val.fval;
-			printf("NUMBER %f\n",  simbolo->val.fval);
+			// printf("NUMBER %f\n",  simbolo->val.fval);
 			}
 	| ID {// procurar o símbolo na tabela a partir do $1
 		simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, $1);

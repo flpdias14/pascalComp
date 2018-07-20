@@ -47,42 +47,43 @@ extern int yydebug;
   {
     INTEGER = 258,
     REAL = 259,
-    ID = 260,
-    TYPE = 261,
-    PROGRAM = 262,
-    VAR = 263,
-    READLN = 264,
-    WRITELN = 265,
-    IF = 266,
-    ELSE = 267,
-    UMINUS = 268
+    NUMBER = 260,
+    ID = 261,
+    TYPE = 262,
+    PROGRAM = 263,
+    VAR = 264,
+    READLN = 265,
+    WRITELN = 266,
+    IF = 267,
+    ELSE = 268,
+    UMINUS = 269
   };
 #endif
 /* Tokens.  */
 #define INTEGER 258
 #define REAL 259
-#define ID 260
-#define TYPE 261
-#define PROGRAM 262
-#define VAR 263
-#define READLN 264
-#define WRITELN 265
-#define IF 266
-#define ELSE 267
-#define UMINUS 268
+#define NUMBER 260
+#define ID 261
+#define TYPE 262
+#define PROGRAM 263
+#define VAR 264
+#define READLN 265
+#define WRITELN 266
+#define IF 267
+#define ELSE 268
+#define UMINUS 269
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 typedef union YYSTYPE YYSTYPE;
 union YYSTYPE
 {
-#line 10 "compilador.yacc" /* yacc.c:1909  */
+#line 11 "compilador.yacc" /* yacc.c:1909  */
 
 	int ival;
 	double dval;	
 
-
-#line 86 "y.tab.h" /* yacc.c:1909  */
+#line 87 "y.tab.h" /* yacc.c:1909  */
 };
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1

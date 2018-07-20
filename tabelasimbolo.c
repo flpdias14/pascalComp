@@ -54,6 +54,15 @@ simbolo * criar_simbolo(char *lexema) {
 
 }
 
+simbolo * criar_numero(char *numero){
+	simbolo* novo_numero = (simbolo*) malloc(sizeof(simbolo));
+	novo_numero->codigo = 0;
+	novo_numero->tipo = 0;
+	novo_numero->val.fval = atof(numero);
+
+	return novo_numero;
+}
+
 simbolo * localizar_simbolo_nome(tabela_simbolo *tabela, char *lexema){
 	if(tabela->primeiro != NULL){
 		return localizar_no_simbolo_nome(tabela->primeiro, lexema);	
@@ -73,6 +82,25 @@ simbolo * localizar_no_simbolo_nome(no_tabela_simbolo* no, char *lexema) {
 		return NULL;
 	}
 
+}
+
+simbolo * localizar_simbolo_numero(tabela_simbolo *tabela, float numero){
+	if(tabela->primeiro != NULL){
+		return localizar_no_simbolo_numero(tabela->primeiro, numero);
+	}
+	return NULL;
+}
+
+simbolo * localizar_no_simbolo_numero(no_tabela_simbolo* no, float numero){
+	if(no->dado->val.fval == numero){
+		return no->dado;
+	}
+	else{
+		if(no->proximo != NULL){
+			return localizar_no_simbolo_numero(no->proximo, numero);
+		}
+	}
+	return NULL;
 }
 
 simbolo * localizar_simbolo_codigo(tabela_simbolo *tabela, int codigo){
@@ -102,6 +130,16 @@ int instalar_simbolo(tabela_simbolo *tabela, char *lexema) {
 		return inserir_simbolo(tabela, dado);
 	}
 	return dado->codigo;
+}
+
+int instalar_numero(tabela_simbolo *tabela, char *numero){
+	
+ 	simbolo* dado_numero = localizar_simbolo_numero(tabela, atof(numero));
+	if(dado_numero == NULL){
+		dado_numero = criar_numero(numero);
+		return inserir_simbolo(tabela, dado_numero);
+	}
+	return dado_numero->codigo;
 }
 
 /*

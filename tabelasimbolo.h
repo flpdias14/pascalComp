@@ -39,20 +39,27 @@ void exibir_no(no_tabela_simbolo* no);
 simbolo * localizar_simbolo_nome(tabela_simbolo *tabela, char *lexema);
 simbolo * localizar_no_simbolo_nome(no_tabela_simbolo* no, char *lexema); 
 
+simbolo * localizar_simbolo_numero(tabela_simbolo *tabela, float numero);
+simbolo * localizar_no_simbolo_numero(no_tabela_simbolo* no, float numero);
+
 /*procura por um símbolo, a partir do código, na tabela de símbolos e 
   retorna um ponteiro para o elemento encontrado. Caso não exista a função 
   deve retornar o valor null */
 simbolo * localizar_simbolo_codigo(tabela_simbolo *tabela, int codigo);
 simbolo * localizar_no_simbolo_codigo(no_tabela_simbolo* no, int codigo); 
 
-/*verifica se já existe um símbolo com o nome correspondente ao lexema 
-  passado como parâmetro. Em caso afirmativo, retorna o código do símbolo 
-  encontrado. Em caso negativo, insere o novo símbolo e retorna seu código. */
+/*verifica se já existe um símbolo ou número com o nome correspondente ao lexema 
+  passado como parâmetro. Em caso afirmativo, retorna o código do registro 
+  encontrado. Em caso negativo, insere o novo registro e retorna seu código. */
 int instalar_simbolo(tabela_simbolo *tabela, char *lexema);
+int instalar_numero(tabela_simbolo *tabela, char *numero);
 
 /*aloca a memória necessária para armazenar uma estrutura do símbolo 
   e inicializa a variável lexema. Obs: para 'copiar' o valor de um string 
   para outro deve ser utilizada a função strcpy(destino, origem) */
 simbolo * criar_simbolo(char *lexema);
-tabela_simbolo* tabela;
+simbolo * criar_numero(char *numero);
+
+tabela_simbolo* tabela_simbolos;
+tabela_simbolo* tabela_numeros;
 #endif

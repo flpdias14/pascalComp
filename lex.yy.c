@@ -391,8 +391,8 @@ static void yy_fatal_error (yyconst char msg[]  );
 	yy_flex_strncpy( yytext, (yytext_ptr), yyleng + 1 ); \
 	(yy_c_buf_p) = yy_cp;
 
-#define YY_NUM_RULES 17
-#define YY_END_OF_BUFFER 18
+#define YY_NUM_RULES 16
+#define YY_END_OF_BUFFER 17
 /* This struct is not used in this scanner,
    but its presence is necessary. */
 struct yy_trans_info
@@ -402,12 +402,12 @@ struct yy_trans_info
 	};
 static yyconst flex_int16_t yy_accept[58] =
     {   0,
-        0,    0,   18,   16,   15,   14,   14,   12,   13,   13,
-       13,   13,   13,   13,   13,   13,    0,   12,   13,   13,
-       13,   13,    9,   13,   13,   13,   13,   13,   11,   13,
-       13,    4,   13,   13,   13,    1,   13,   13,   10,   13,
-       13,   13,    6,   13,    3,   13,   13,   13,   13,   13,
-       13,    8,   13,    5,    2,    7,    0
+        0,    0,   17,   15,   14,   13,   13,   11,   12,   12,
+       12,   12,   12,   12,   12,   12,    0,   11,   12,   12,
+       12,   12,    9,   12,   12,   12,   12,   12,   11,   12,
+       12,    4,   12,   12,   12,    1,   12,   12,   10,   12,
+       12,   12,    6,   12,    3,   12,   12,   12,   12,   12,
+       12,    8,   12,    5,    2,    7,    0
     } ;
 
 static yyconst flex_int32_t yy_ec[256] =
@@ -500,9 +500,9 @@ static yyconst flex_int16_t yy_chk[96] =
     } ;
 
 /* Table of booleans, true if rule could match eol. */
-static yyconst flex_int32_t yy_rule_can_match_eol[18] =
+static yyconst flex_int32_t yy_rule_can_match_eol[17] =
     {   0,
-0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,     };
+0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,     };
 
 static yy_state_type yy_last_accepting_state;
 static char *yy_last_accepting_cpos;
@@ -531,9 +531,10 @@ void yyerror(char *s);
 #include "y.tab.h"
 #include "tabelasimbolo.h"
 #include "constantes.h"
-extern tabela_simbolo* tabela;
+extern tabela_simbolo* tabela_simbolos;
+extern tabela_simbolo* tabela_numeros;
 char* msg_erro = "caractere invalido: ";
-#line 537 "lex.yy.c"
+#line 538 "lex.yy.c"
 
 #define INITIAL 0
 
@@ -747,9 +748,9 @@ YY_DECL
 		}
 
 	{
-#line 15 "compilador.lex"
+#line 17 "compilador.lex"
 
-#line 753 "lex.yy.c"
+#line 754 "lex.yy.c"
 
 	while ( 1 )		/* loops until end-of-file is reached */
 		{
@@ -818,35 +819,35 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 16 "compilador.lex"
+#line 18 "compilador.lex"
 {
 			return VAR;
 		}
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 19 "compilador.lex"
+#line 21 "compilador.lex"
 {
 			return PROGRAM;
 		}
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 22 "compilador.lex"
+#line 24 "compilador.lex"
 {
 			// return BEGIN;
 		}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 25 "compilador.lex"
+#line 27 "compilador.lex"
 {
 			// return END;
 		}
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 28 "compilador.lex"
+#line 30 "compilador.lex"
 { 	// passa o codigo do tipo inteiro para o yacc
 			yylval.ival = COD_INT; 
 			return TYPE;
@@ -854,7 +855,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 33 "compilador.lex"
+#line 35 "compilador.lex"
 { 
 			// passa o codigo do tipo float para o yacc
 			yylval.ival = COD_FLOAT; 
@@ -863,70 +864,67 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 39 "compilador.lex"
+#line 41 "compilador.lex"
 {	
 			return WRITELN;
 		}
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 43 "compilador.lex"
+#line 45 "compilador.lex"
 {
 			return READLN;
 		}
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 47 "compilador.lex"
+#line 49 "compilador.lex"
 {
 			return IF;
 		}
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 51 "compilador.lex"
+#line 53 "compilador.lex"
 {
 			return ELSE;
 		}
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 54 "compilador.lex"
-{yylval.dval = atof(yytext); return REAL;}
+#line 56 "compilador.lex"
+{ yylval.ival = instalar_numero(tabela_numeros, yytext);
+			return NUMBER;
+			}
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 56 "compilador.lex"
-{yylval.ival = atoi(yytext);return INTEGER;}
-	YY_BREAK
-case 13:
-YY_RULE_SETUP
-#line 58 "compilador.lex"
-{ yylval.ival = instalar_simbolo(tabela, yytext);
+#line 60 "compilador.lex"
+{ yylval.ival = instalar_simbolo(tabela_simbolos, yytext);
 	return ID;}
 	YY_BREAK
-case 14:
-/* rule 14 can match eol */
+case 13:
+/* rule 13 can match eol */
 YY_RULE_SETUP
-#line 60 "compilador.lex"
+#line 62 "compilador.lex"
 {return *yytext;}
+	YY_BREAK
+case 14:
+YY_RULE_SETUP
+#line 64 "compilador.lex"
+;
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 62 "compilador.lex"
-;
+#line 65 "compilador.lex"
+{yyerror(msg_erro);}
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 63 "compilador.lex"
-{yyerror(msg_erro);}
-	YY_BREAK
-case 17:
-YY_RULE_SETUP
-#line 65 "compilador.lex"
+#line 67 "compilador.lex"
 ECHO;
 	YY_BREAK
-#line 930 "lex.yy.c"
+#line 928 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1933,7 +1931,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 64 "compilador.lex"
+#line 66 "compilador.lex"
 
 
 

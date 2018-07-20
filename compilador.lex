@@ -5,13 +5,15 @@ void yyerror(char *s);
 #include "y.tab.h"
 #include "tabelasimbolo.h"
 #include "constantes.h"
-extern tabela_simbolo* tabela;
+extern tabela_simbolo* tabela_simbolos;
+extern tabela_simbolo* tabela_numeros;
 char* msg_erro = "caractere invalido: ";
 %}
 letra	[A-Za-z]
 digito	[0-9]
 id	({letra}|_)({letra}|{digito})*
 operadores	[-+*\/=%(\)\n;:><]
+numero	({digito}+"."{digito}+|{digito}+)
 %%
 var 	{
 			return VAR;
@@ -51,11 +53,11 @@ if		{
 else	{
 			return ELSE;
 		}
-{digito}+"."{digito}+	{yylval.dval = atof(yytext); return REAL;}
+{numero}	{ yylval.ival = instalar_numero(tabela_numeros, yytext);
+			return NUMBER;
+			}
 
-{digito}+	{yylval.ival = atoi(yytext);return INTEGER;}
-
-{id}	{ yylval.ival = instalar_simbolo(tabela, yytext);
+{id}	{ yylval.ival = instalar_simbolo(tabela_simbolos, yytext);
 	return ID;}
 {operadores}	{return *yytext;}
 

@@ -849,7 +849,7 @@ case 5:
 YY_RULE_SETUP
 #line 30 "compilador.lex"
 { 	// passa o codigo do tipo inteiro para o yacc
-			yylval.ival = COD_INT; 
+			yylval = COD_INT; 
 			return TYPE;
 		}
 	YY_BREAK
@@ -858,7 +858,7 @@ YY_RULE_SETUP
 #line 35 "compilador.lex"
 { 
 			// passa o codigo do tipo float para o yacc
-			yylval.ival = COD_FLOAT; 
+			yylval = COD_FLOAT; 
 			return TYPE;
 		}
 	YY_BREAK
@@ -899,36 +899,36 @@ YY_RULE_SETUP
 	YY_BREAK
 case 12:
 YY_RULE_SETUP
-#line 59 "compilador.lex"
-{ yylval.ival = instalar_numero(tabela_numeros, yytext);
+#line 60 "compilador.lex"
+{ yylval = instalar_numero(tabela_numeros, yytext);
 			return NUMBER;
 			}
 	YY_BREAK
 case 13:
 YY_RULE_SETUP
-#line 63 "compilador.lex"
-{ yylval.ival = instalar_simbolo(tabela_simbolos, yytext);
+#line 64 "compilador.lex"
+{ yylval = instalar_simbolo(tabela_simbolos, yytext);
 	return ID;}
 	YY_BREAK
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 65 "compilador.lex"
+#line 66 "compilador.lex"
 {return *yytext;}
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 67 "compilador.lex"
+#line 68 "compilador.lex"
 ;
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 68 "compilador.lex"
+#line 69 "compilador.lex"
 {yyerror(msg_erro);}
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 70 "compilador.lex"
+#line 71 "compilador.lex"
 ECHO;
 	YY_BREAK
 #line 935 "lex.yy.c"
@@ -1938,7 +1938,7 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 69 "compilador.lex"
+#line 70 "compilador.lex"
 
 
 

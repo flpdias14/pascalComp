@@ -2,30 +2,27 @@
 #include <stdio.h>
 #include "tabelasimbolo.h"
 #include "constantes.h"
+#include "arvore.h"
 int yylex(void);
 void yyerror(char *);
 extern tabela_simbolo* tabela_simbolos;
 extern tabela_simbolo* tabela_numeros;
 %}
-/* union para armazenar os valores dos tokens*/
-%union {
-	int ival;
-	double dval;	
-}
+
 /* Declaracao dos tokens*/
-%token 	<ival> INTEGER
-%token 	<dval> REAL
-%token 	<ival> NUMBER
-%token	<ival> ID
-%token 	<ival> TYPE 
-%token PROGRAM VAR READLN WRITELN IF ELSE ATTR
+%token 	INTEGER
+%token 	REAL
+%token 	NUMBER
+%token	ID
+%token 	 TYPE 
+%token PROGRAM VAR READLN WRITELN IF ELSE ATTR GEQ LEQ NEQ EXPR DIV DECL
 /* Declaracao dos operadores. A precedência é definida de baixo para cima. */
 %left '+' '-'
 %left '*' '/' '%'
 /* precedencia do menos unário em uma expr */
 %nonassoc UMINUS
 
-%type <dval> expr
+
 %%
 
 
@@ -48,7 +45,7 @@ decl:
 				// localiza o simbolo na tabela de simbolos pelo codigo
 				simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, $2);
 				//Setar o tipo da variável simbolo.tipo = $1				
-				simbolo->tipo = $4;				
+				no_arvore *n = criar_no_declaracao(simbolo, $4);				
 				//printf("ID = %s\n TIPO = %d\n",  simbolo->lexema, $1);
 								}
 	;
@@ -56,7 +53,7 @@ stmts:
 	stmts stmt	{}
 	|
 	;
-/* Regra para reconhececimento de um statement */
+
 stmt:
 	expr ';' {}
 	| attr 	{}
@@ -77,25 +74,44 @@ attr:
 				simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, $1);
 				if (simbolo->tipo == COD_INT) simbolo->val.dval = (int) $3;
 				else if (simbolo->tipo == COD_FLOAT) simbolo->val.fval = $3;
+				no_arvore * n = criar_no_atribuicao(simbolo, (void*) $3);
+				//no_arvore *n = criar_no_atribuicao(simbolo, (void *) $3);
+				$$ = (int) n;
                 //Setar o valor da variável var->dado.valor.ival ou dval = $3
 
 				}
 	;
+
 expr:
 	NUMBER {
-			simbolo* simbolo = localizar_simbolo_codigo(tabela_numeros, $1);
-			$$ = simbolo->val.fval;
-			// printf("NUMBER %f\n",  simbolo->val.fval);
+											simbolo* numero = localizar_simbolo_codigo(tabela_numeros, $1);
+											no_arvore *n = criar_no_expressao(NUMBER, (void *) numero, NULL);
+				  							$$ = (int) n; 
 			}
 	| ID {// procurar o símbolo na tabela a partir do $1
-		simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, $1);
-		$$ = (simbolo->tipo == COD_INT ? simbolo->val.dval : simbolo->val.fval);
+											simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, $1);
+											no_arvore *n = criar_no_expressao(ID, (void *) simbolo, NULL);
+											$$ = (int) n;
 		}
-	| expr '+' expr	{$$ = $1 + $3;}
-	| expr '-' expr	{$$ = $1 - $3;}
-	| expr '*' expr	{$$ = $1 * $3;}
-	| expr '/' expr	{$$ = $1 / $3;}
-	| expr '%' expr	{//$$ = $1 % $3;} 
+	| expr '+' expr	{
+											no_arvore * n = criar_no_expressao('+', (void *) $1, (void *) $3);
+											$$ = (int) n;
+	}
+	| expr '-' expr	{
+											no_arvore *n = criar_no_expressao('-', (void *) $1, (void *) $3);
+											$$ = (int) n;
+	}
+	| expr '*' expr	{				
+											no_arvore *n = criar_no_expressao('*', (void *) $1, (void *) $3);
+											$$ = (int) n;
+											}
+	| expr '/' expr	{
+											no_arvore * n = criar_no_expressao('/', (void *) $1, (void *) $3);
+											$$ = (int) n;
+	}
+	| expr '%' expr	{
+									 		no_arvore * n = criar_no_expressao('%', (void *) $1, (void *) $3);
+											$$ = (int) n;
 					}
 	| '(' expr ')'	{$$ = $2;}
 	| '-' expr %prec UMINUS	{$$ = -$2;}

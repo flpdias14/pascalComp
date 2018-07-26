@@ -28,13 +28,13 @@ end		{
 			// return END;
 		}
 integer { 	// passa o codigo do tipo inteiro para o yacc
-			yylval.ival = COD_INT; 
+			yylval = COD_INT; 
 			return TYPE;
 		}
 
 real 	{ 
 			// passa o codigo do tipo float para o yacc
-			yylval.ival = COD_FLOAT; 
+			yylval = COD_FLOAT; 
 			return TYPE;
 		}
 
@@ -56,11 +56,12 @@ else	{
 :=		{
 			return ATTR;
 		}
-{numero}	{ yylval.ival = instalar_numero(tabela_numeros, yytext);
+
+{numero}	{ yylval = instalar_numero(tabela_numeros, yytext);
 			return NUMBER;
 			}
 
-{id}	{ yylval.ival = instalar_simbolo(tabela_simbolos, yytext);
+{id}	{ yylval = instalar_simbolo(tabela_simbolos, yytext);
 	return ID;}
 {operadores}	{return *yytext;}
 

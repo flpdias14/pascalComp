@@ -57,7 +57,13 @@ extern int yydebug;
     IF = 267,
     ELSE = 268,
     ATTR = 269,
-    UMINUS = 270
+    GEQ = 270,
+    LEQ = 271,
+    NEQ = 272,
+    EXPR = 273,
+    DIV = 274,
+    DECL = 275,
+    UMINUS = 276
   };
 #endif
 /* Tokens.  */
@@ -73,20 +79,17 @@ extern int yydebug;
 #define IF 267
 #define ELSE 268
 #define ATTR 269
-#define UMINUS 270
+#define GEQ 270
+#define LEQ 271
+#define NEQ 272
+#define EXPR 273
+#define DIV 274
+#define DECL 275
+#define UMINUS 276
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef union YYSTYPE YYSTYPE;
-union YYSTYPE
-{
-#line 11 "compilador.yacc" /* yacc.c:1909  */
-
-	int ival;
-	double dval;	
-
-#line 89 "y.tab.h" /* yacc.c:1909  */
-};
+typedef int YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

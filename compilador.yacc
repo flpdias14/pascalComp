@@ -15,7 +15,7 @@ extern tabela_simbolo* tabela_numeros;
 %token 	NUMBER
 %token	ID
 %token 	 TYPE 
-%token PROGRAM VAR READLN WRITELN IF ELSE ATTR GEQ LEQ NEQ EXPR DIV DECL
+%token PROGRAM VAR READLN WRITELN IF ELSE ATTR GEQ LEQ NEQ EXPR DIV DECL STMTS
 /* Declaracao dos operadores. A precedência é definida de baixo para cima. */
 %left '+' '-'
 %left '*' '/' '%'
@@ -47,10 +47,14 @@ decl:
 				//Setar o tipo da variável simbolo.tipo = $1				
 				no_arvore *n = criar_no_declaracao(simbolo, $4);				
 				//printf("ID = %s\n TIPO = %d\n",  simbolo->lexema, $1);
+				$$ = (int) n;
 								}
 	;
 stmts:
-	stmts stmt	{}
+	stmts stmt	{ 
+		no_arvore * n = criar_no_statements((void *) $2);
+		$$ = (int) n;
+	}
 	|
 	;
 

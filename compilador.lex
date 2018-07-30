@@ -22,10 +22,10 @@ program	{
 			return PROGRAM;
 		}
 begin	{
-			// return BEGIN;
+			 return BEGIN;
 		}
 end		{
-			// return END;
+			 return END;
 		}
 integer { 	// passa o codigo do tipo inteiro para o yacc
 			yylval = COD_INT; 

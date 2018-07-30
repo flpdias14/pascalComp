@@ -44,3 +44,16 @@ t_decls * criar_declaracao(simbolo * identificador, int tipo){
 	novo->simbolo = identificador;
 	novo->tipo = tipo;
 }
+
+no_arvore * criar_no_statements( void *expressao) {
+	no_arvore *novo = (no_arvore *)  malloc(sizeof(no_arvore));
+	novo->tipo = STMTS;
+	novo->dado.stmt =  criar_statements(expressao);
+	return novo;
+}
+
+t_stmts * criar_statements( void *expressao){ 
+	t_stmts * novo = (t_stmts *) malloc(sizeof(t_stmts));
+	novo->expressao = expressao;
+	return novo;
+}

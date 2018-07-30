@@ -26,12 +26,17 @@ typedef struct t_decls{
 	int tipo;
 } t_decls;
 
+typedef struct t_stmts {
+	void *expressao;
+} t_stmts;
+
 /* A union valor_sintático está sendo utilizada para 
 incorporar todos os tipos de nós declarados acima */
 typedef union valor_sintatico {
 	t_expr *expr;
 	t_attr *attr;
 	t_decls *decl;
+	t_stmts *stmt;
 } valor_sintatico;
 
 /*desta forma, o nó da árvore deve conter a variável do tipo
@@ -58,4 +63,6 @@ t_attr * criar_atribuicao(simbolo *resultado, void *expressao);
 no_arvore * criar_no_declaracao(simbolo * identificador, int tipo);
 t_decls * criar_declaracao(simbolo * identificador, int tipo);
 
+no_arvore * criar_no_statements(void * expressao);
+t_stmts * criar_statements(void * expressao);
 #endif

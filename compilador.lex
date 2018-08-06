@@ -21,12 +21,8 @@ var 	{
 program	{
 			return PROGRAM;
 		}
-begin	{
-			 return BEGIN;
-		}
-end		{
-			 return END;
-		}
+begin	{	return START;}
+end		{	return END;}
 integer { 	// passa o codigo do tipo inteiro para o yacc
 			yylval = COD_INT; 
 			return TYPE;
@@ -57,9 +53,14 @@ else	{
 			return ATTR;
 		}
 
-{numero}	{ yylval = instalar_numero(tabela_numeros, yytext);
-			return NUMBER;
-			}
+{digito}+"."{digito}+	{ yylval = instalar_numero(tabela_numeros, yytext, COD_FLOAT);
+							return NUMBER;
+						}
+
+{digito}+	{
+					yylval = instalar_numero(tabela_numeros, yytext, COD_INT);
+							return NUMBER;
+}
 
 {id}	{ yylval = instalar_simbolo(tabela_simbolos, yytext);
 	return ID;}

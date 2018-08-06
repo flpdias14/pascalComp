@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include "tabelasimbolo.h"
-
+#include "constantes.h"
 tabela_simbolo * inicializar_tabela (){
 	tabela_simbolo * nova_tabela = (tabela_simbolo*) malloc(sizeof(tabela_simbolo));
 }
@@ -54,11 +54,12 @@ simbolo * criar_simbolo(char *lexema) {
 
 }
 
-simbolo * criar_numero(char *numero){
+simbolo * criar_numero(char *numero, int tipo){
 	simbolo* novo_numero = (simbolo*) malloc(sizeof(simbolo));
 	novo_numero->codigo = 0;
 	novo_numero->tipo = 0;
-	novo_numero->val.fval = atof(numero);
+	if(tipo == COD_FLOAT) novo_numero->val.fval = atof(numero);
+	else novo_numero->val.dval = atoi(numero);
 
 	return novo_numero;
 }
@@ -132,11 +133,11 @@ int instalar_simbolo(tabela_simbolo *tabela, char *lexema) {
 	return dado->codigo;
 }
 
-int instalar_numero(tabela_simbolo *tabela, char *numero){
+int instalar_numero(tabela_simbolo *tabela, char *numero, int tipo){
 	
  	simbolo* dado_numero = localizar_simbolo_numero(tabela, atof(numero));
 	if(dado_numero == NULL){
-		dado_numero = criar_numero(numero);
+		dado_numero = criar_numero(numero, tipo);
 		return inserir_simbolo(tabela, dado_numero);
 	}
 	return dado_numero->codigo;

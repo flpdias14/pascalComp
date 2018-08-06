@@ -52,13 +52,13 @@ simbolo * localizar_no_simbolo_codigo(no_tabela_simbolo* no, int codigo);
   passado como parâmetro. Em caso afirmativo, retorna o código do registro 
   encontrado. Em caso negativo, insere o novo registro e retorna seu código. */
 int instalar_simbolo(tabela_simbolo *tabela, char *lexema);
-int instalar_numero(tabela_simbolo *tabela, char *numero);
+int instalar_numero(tabela_simbolo *tabela, char *numero, int tipo);
 
 /*aloca a memória necessária para armazenar uma estrutura do símbolo 
   e inicializa a variável lexema. Obs: para 'copiar' o valor de um string 
   para outro deve ser utilizada a função strcpy(destino, origem) */
 simbolo * criar_simbolo(char *lexema);
-simbolo * criar_numero(char *numero);
+simbolo * criar_numero(char *numero, int tipo);
 
 tabela_simbolo* tabela_simbolos;
 tabela_simbolo* tabela_numeros;

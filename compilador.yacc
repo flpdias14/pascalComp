@@ -15,7 +15,7 @@ extern tabela_simbolo* tabela_numeros;
 %token 	NUMBER
 %token	ID
 %token 	 TYPE 
-%token PROGRAM VAR READLN WRITELN IF ELSE ATTR GEQ LEQ NEQ EXPR DIV DECL STMTS
+%token PROGRAM VAR READLN WRITELN IF ELSE ATTR GEQ LEQ NEQ EXPR DIV DECL STMTS START END
 /* Declaracao dos operadores. A precedência é definida de baixo para cima. */
 %left '+' '-'
 %left '*' '/' '%'

@@ -64,7 +64,9 @@ extern int yydebug;
     DIV = 274,
     DECL = 275,
     STMTS = 276,
-    UMINUS = 277
+    START = 277,
+    END = 278,
+    UMINUS = 279
   };
 #endif
 /* Tokens.  */
@@ -87,7 +89,9 @@ extern int yydebug;
 #define DIV 274
 #define DECL 275
 #define STMTS 276
-#define UMINUS 277
+#define START 277
+#define END 278
+#define UMINUS 279
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

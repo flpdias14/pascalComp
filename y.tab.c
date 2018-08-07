@@ -471,9 +471,9 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    30,    30,    31,    35,    40,    41,    44,    54,    58,
-      62,    63,    64,    75,    90,    95,   100,   104,   108,   112,
-     116,   120,   121
+       0,    30,    30,    31,    35,    40,    41,    44,    55,    59,
+      63,    64,    65,    80,    95,   100,   105,   109,   113,   117,
+     121,   125,   126
 };
 #endif
 
@@ -1292,56 +1292,61 @@ yyreduce:
   case 7:
 #line 44 "compilador.yacc" /* yacc.c:1646  */
     { 
-				// localiza o simbolo na tabela de simbolos pelo codigo
-				simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, (yyvsp[-3]));
+				// localiza o simbolo na tabela de simbolos pelo nome
+				int cod = instalar_simbolo(tabela_simbolos, (char* ) (yyvsp[-3]), (yyvsp[-1]));
 				//Setar o tipo da variável simbolo.tipo = $1				
+				simbolo *simbolo = localizar_simbolo_codigo(tabela_simbolos, cod );
 				no_arvore *n = criar_no_declaracao(simbolo, (yyvsp[-1]));				
 				//printf("ID = %s\n TIPO = %d\n",  simbolo->lexema, $1);
 				(yyval) = (int) n;
 								}
-#line 1303 "y.tab.c" /* yacc.c:1646  */
+#line 1304 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 54 "compilador.yacc" /* yacc.c:1646  */
+#line 55 "compilador.yacc" /* yacc.c:1646  */
     { 
 		no_arvore * n = criar_no_statements((void *) (yyvsp[0]));
 		(yyval) = (int) n;
 	}
-#line 1312 "y.tab.c" /* yacc.c:1646  */
+#line 1313 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 62 "compilador.yacc" /* yacc.c:1646  */
+#line 63 "compilador.yacc" /* yacc.c:1646  */
     {}
-#line 1318 "y.tab.c" /* yacc.c:1646  */
+#line 1319 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 63 "compilador.yacc" /* yacc.c:1646  */
+#line 64 "compilador.yacc" /* yacc.c:1646  */
     {}
-#line 1324 "y.tab.c" /* yacc.c:1646  */
+#line 1325 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 64 "compilador.yacc" /* yacc.c:1646  */
+#line 65 "compilador.yacc" /* yacc.c:1646  */
     { 
-				// localiza o simbolo na tabela de simbolos pelo codigo
-				simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, (yyvsp[-2]));
+				// localiza o simbolo na tabela de simbolos pelo nome
+				simbolo* simbolo = localizar_simbolo_nome(tabela_simbolos, (char *) (yyvsp[-2]));
 	
-  				(simbolo->tipo == COD_INT ? 
-					printf("%s = %d\n",simbolo->lexema, simbolo->val.dval): 
-					printf("%s = %f\n",simbolo->lexema, simbolo->val.fval));
+  				if(simbolo->tipo == COD_INT ){
+					printf("%s INT= %d\n",simbolo->lexema, simbolo->val.dval);  
+				} 
+				else if(simbolo->tipo == COD_FLOAT){
+					printf("%s REAL= %f\n",simbolo->lexema, simbolo->val.fval);
+				}
+					
 							}
-#line 1337 "y.tab.c" /* yacc.c:1646  */
+#line 1342 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 75 "compilador.yacc" /* yacc.c:1646  */
+#line 80 "compilador.yacc" /* yacc.c:1646  */
     {
 
 				// localiza o simbolo na tabela de simbolos pelo codigo
-				simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, (yyvsp[-3]));
+				simbolo* simbolo = localizar_simbolo_nome(tabela_simbolos, (char *) (yyvsp[-3]));
 				if (simbolo->tipo == COD_INT) simbolo->val.dval = (int) (yyvsp[-1]);
 				else if (simbolo->tipo == COD_FLOAT) simbolo->val.fval = (yyvsp[-1]);
 				no_arvore * n = criar_no_atribuicao(simbolo, (void*) (yyvsp[-1]));
@@ -1350,88 +1355,88 @@ yyreduce:
                 //Setar o valor da variável var->dado.valor.ival ou dval = $3
 
 				}
-#line 1354 "y.tab.c" /* yacc.c:1646  */
+#line 1359 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 90 "compilador.yacc" /* yacc.c:1646  */
+#line 95 "compilador.yacc" /* yacc.c:1646  */
     {
 											simbolo* numero = localizar_simbolo_codigo(tabela_numeros, (yyvsp[0]));
 											no_arvore *n = criar_no_expressao(NUMBER, (void *) numero, NULL);
 				  							(yyval) = (int) n; 
 			}
-#line 1364 "y.tab.c" /* yacc.c:1646  */
+#line 1369 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 95 "compilador.yacc" /* yacc.c:1646  */
+#line 100 "compilador.yacc" /* yacc.c:1646  */
     {// procurar o símbolo na tabela a partir do $1
-											simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, (yyvsp[0]));
+											simbolo* simbolo = localizar_simbolo_nome(tabela_simbolos,(char *) (yyvsp[0]));
 											no_arvore *n = criar_no_expressao(ID, (void *) simbolo, NULL);
 											(yyval) = (int) n;
 		}
-#line 1374 "y.tab.c" /* yacc.c:1646  */
+#line 1379 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 100 "compilador.yacc" /* yacc.c:1646  */
+#line 105 "compilador.yacc" /* yacc.c:1646  */
     {
 											no_arvore * n = criar_no_expressao('+', (void *) (yyvsp[-2]), (void *) (yyvsp[0]));
 											(yyval) = (int) n;
 	}
-#line 1383 "y.tab.c" /* yacc.c:1646  */
+#line 1388 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 104 "compilador.yacc" /* yacc.c:1646  */
+#line 109 "compilador.yacc" /* yacc.c:1646  */
     {
 											no_arvore *n = criar_no_expressao('-', (void *) (yyvsp[-2]), (void *) (yyvsp[0]));
 											(yyval) = (int) n;
 	}
-#line 1392 "y.tab.c" /* yacc.c:1646  */
+#line 1397 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 18:
-#line 108 "compilador.yacc" /* yacc.c:1646  */
+#line 113 "compilador.yacc" /* yacc.c:1646  */
     {				
 											no_arvore *n = criar_no_expressao('*', (void *) (yyvsp[-2]), (void *) (yyvsp[0]));
 											(yyval) = (int) n;
 											}
-#line 1401 "y.tab.c" /* yacc.c:1646  */
+#line 1406 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 19:
-#line 112 "compilador.yacc" /* yacc.c:1646  */
+#line 117 "compilador.yacc" /* yacc.c:1646  */
     {
 											no_arvore * n = criar_no_expressao('/', (void *) (yyvsp[-2]), (void *) (yyvsp[0]));
 											(yyval) = (int) n;
 	}
-#line 1410 "y.tab.c" /* yacc.c:1646  */
+#line 1415 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 116 "compilador.yacc" /* yacc.c:1646  */
+#line 121 "compilador.yacc" /* yacc.c:1646  */
     {
 									 		no_arvore * n = criar_no_expressao('%', (void *) (yyvsp[-2]), (void *) (yyvsp[0]));
 											(yyval) = (int) n;
 					}
-#line 1419 "y.tab.c" /* yacc.c:1646  */
+#line 1424 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 120 "compilador.yacc" /* yacc.c:1646  */
+#line 125 "compilador.yacc" /* yacc.c:1646  */
     {(yyval) = (yyvsp[-1]);}
-#line 1425 "y.tab.c" /* yacc.c:1646  */
+#line 1430 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 121 "compilador.yacc" /* yacc.c:1646  */
+#line 126 "compilador.yacc" /* yacc.c:1646  */
     {(yyval) = -(yyvsp[0]);}
-#line 1431 "y.tab.c" /* yacc.c:1646  */
+#line 1436 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1435 "y.tab.c" /* yacc.c:1646  */
+#line 1440 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1659,7 +1664,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 124 "compilador.yacc" /* yacc.c:1906  */
+#line 129 "compilador.yacc" /* yacc.c:1906  */
 
 
 void yyerror(char *s) {

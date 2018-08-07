@@ -62,7 +62,7 @@ else	{
 							return NUMBER;
 }
 
-{id}	{ yylval = instalar_simbolo(tabela_simbolos, yytext);
+{id}	{ yylval = (int) strdup(yytext);
 	return ID;}
 {operadores}	{return *yytext;}
 

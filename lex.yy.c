@@ -911,7 +911,7 @@ YY_RULE_SETUP
 case 14:
 YY_RULE_SETUP
 #line 65 "compilador.lex"
-{ yylval = instalar_simbolo(tabela_simbolos, yytext);
+{ yylval = (int) strdup(yytext);
 	return ID;}
 	YY_BREAK
 case 15:

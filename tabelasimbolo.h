@@ -51,7 +51,7 @@ simbolo * localizar_no_simbolo_codigo(no_tabela_simbolo* no, int codigo);
 /*verifica se já existe um símbolo ou número com o nome correspondente ao lexema 
   passado como parâmetro. Em caso afirmativo, retorna o código do registro 
   encontrado. Em caso negativo, insere o novo registro e retorna seu código. */
-int instalar_simbolo(tabela_simbolo *tabela, char *lexema);
+int instalar_simbolo(tabela_simbolo *tabela, char *lexema, int tipo);
 int instalar_numero(tabela_simbolo *tabela, char *numero, int tipo);
 
 /*aloca a memória necessária para armazenar uma estrutura do símbolo 

@@ -14,7 +14,7 @@ extern tabela_simbolo* tabela_numeros;
 %token 	REAL
 %token 	NUMBER
 %token	ID
-%token 	 TYPE 
+%token 	TYPE 
 %token PROGRAM VAR READLN WRITELN IF ELSE ATTR GEQ LEQ NEQ EXPR DIV DECL STMTS START END
 /* Declaracao dos operadores. A precedência é definida de baixo para cima. */
 %left '+' '-'
@@ -42,9 +42,10 @@ decls:
 	;
 decl:	
 	VAR ID ':' TYPE ';'		{ 
-				// localiza o simbolo na tabela de simbolos pelo codigo
-				simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, $2);
+				// localiza o simbolo na tabela de simbolos pelo nome
+				int cod = instalar_simbolo(tabela_simbolos, (char* ) $2, $4);
 				//Setar o tipo da variável simbolo.tipo = $1				
+				simbolo *simbolo = localizar_simbolo_codigo(tabela_simbolos, cod );
 				no_arvore *n = criar_no_declaracao(simbolo, $4);				
 				//printf("ID = %s\n TIPO = %d\n",  simbolo->lexema, $1);
 				$$ = (int) n;
@@ -62,12 +63,16 @@ stmt:
 	expr ';' {}
 	| attr 	{}
 	| WRITELN '(' ID ')' ';' { 
-				// localiza o simbolo na tabela de simbolos pelo codigo
-				simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, $3);
+				// localiza o simbolo na tabela de simbolos pelo nome
+				simbolo* simbolo = localizar_simbolo_nome(tabela_simbolos, (char *) $3);
 	
-  				(simbolo->tipo == COD_INT ? 
-					printf("%s = %d\n",simbolo->lexema, simbolo->val.dval): 
-					printf("%s = %f\n",simbolo->lexema, simbolo->val.fval));
+  				if(simbolo->tipo == COD_INT ){
+					printf("%s INT= %d\n",simbolo->lexema, simbolo->val.dval);  
+				} 
+				else if(simbolo->tipo == COD_FLOAT){
+					printf("%s REAL= %f\n",simbolo->lexema, simbolo->val.fval);
+				}
+					
 							}
 	;
 
@@ -75,9 +80,9 @@ attr:
 	ID ATTR expr ';'	{
 
 				// localiza o simbolo na tabela de simbolos pelo codigo
-				simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, $1);
+				simbolo* simbolo = localizar_simbolo_nome(tabela_simbolos, (char *) $1);
 				if (simbolo->tipo == COD_INT) simbolo->val.dval = (int) $3;
-				else if (simbolo->tipo == COD_FLOAT) simbolo->val.fval = $3;
+				else if (simbolo->tipo == COD_FLOAT) simbolo->val.fval = (float) $3;
 				no_arvore * n = criar_no_atribuicao(simbolo, (void*) $3);
 				//no_arvore *n = criar_no_atribuicao(simbolo, (void *) $3);
 				$$ = (int) n;
@@ -93,7 +98,7 @@ expr:
 				  							$$ = (int) n; 
 			}
 	| ID {// procurar o símbolo na tabela a partir do $1
-											simbolo* simbolo = localizar_simbolo_codigo(tabela_simbolos, $1);
+											simbolo* simbolo = localizar_simbolo_nome(tabela_simbolos,(char *) $1);
 											no_arvore *n = criar_no_expressao(ID, (void *) simbolo, NULL);
 											$$ = (int) n;
 		}

@@ -124,10 +124,11 @@ simbolo * localizar_no_simbolo_codigo(no_tabela_simbolo *no, int codigo){
 	}
 }
 
-int instalar_simbolo(tabela_simbolo *tabela, char *lexema) {
+int instalar_simbolo(tabela_simbolo *tabela, char *lexema,int tipo) {
 	simbolo* dado = localizar_simbolo_nome(tabela, lexema);
 	if(dado == NULL){
 		dado = criar_simbolo(lexema);
+		dado->tipo = tipo;
 		return inserir_simbolo(tabela, dado);
 	}
 	return dado->codigo;

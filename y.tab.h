@@ -66,7 +66,8 @@ extern int yydebug;
     STMTS = 276,
     START = 277,
     END = 278,
-    UMINUS = 279
+    WHILE = 279,
+    UMINUS = 280
   };
 #endif
 /* Tokens.  */
@@ -91,7 +92,8 @@ extern int yydebug;
 #define STMTS 276
 #define START 277
 #define END 278
-#define UMINUS 279
+#define WHILE 279
+#define UMINUS 280
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

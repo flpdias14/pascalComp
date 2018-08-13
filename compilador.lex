@@ -49,6 +49,11 @@ if		{
 else	{
 			return ELSE;
 		}
+while	{
+			return WHILE;
+}
+
+
 :=		{
 			return ATTR;
 		}

@@ -37,23 +37,38 @@ no_arvore * criar_no_declaracao(simbolo * identificador, int tipo){
 	no_arvore * novo = (no_arvore *) malloc(sizeof(no_arvore));
 	novo->tipo = DECL;
 	novo->dado.decl = criar_declaracao(identificador, tipo);
+	return novo;
 }
 
 t_decls * criar_declaracao(simbolo * identificador, int tipo){
 	t_decls * novo = (t_decls * ) malloc(sizeof(t_decls));
 	novo->simbolo = identificador;
 	novo->tipo = tipo;
+	return novo;
 }
 
 no_arvore * criar_no_statements( void *expressao) {
 	no_arvore *novo = (no_arvore *)  malloc(sizeof(no_arvore));
 	novo->tipo = STMTS;
-	novo->dado.stmt =  criar_statements(expressao);
+	novo->dado.stmts =  criar_statements(expressao);
 	return novo;
 }
 
 t_stmts * criar_statements( void *expressao){ 
 	t_stmts * novo = (t_stmts *) malloc(sizeof(t_stmts));
-	novo->expressao = expressao;
+	novo->expressao = expressao;	
 	return novo;
 }
+
+// no_arvore * criar_no_statements( void *expressao) {
+// 	no_arvore *novo = (no_arvore *)  malloc(sizeof(no_arvore));
+// 	novo->tipo = STMTS;
+// 	novo->dado.stmts =  criar_statements(expressao);
+// 	return novo;
+// }
+
+// t_bloco * criar_bloco( void *expressao){ 
+// 	t_bloco * novo = (t_bloco *) malloc(sizeof(t_bloco));
+// 	novo->expressao = expressao;	
+// 	return novo;
+// }

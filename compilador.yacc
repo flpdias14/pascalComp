@@ -16,7 +16,7 @@ extern tabela_simbolo* tabela_numeros;
 %token 	NUMBER
 %token	ID
 %token 	TYPE 
-%token PROGRAM VAR READLN WRITELN IF ELSE ATTR GEQ LEQ NEQ EXPR DIV DECL STMTS START END WHILE
+%token PROGRAM VAR READLN WRITELN IF THEN ELSE ATTR GEQ LEQ NEQ EXPR MOD DIV DECL STMTS START END WHILE DIFF
 /* Declaracao dos operadores. A precedência é definida de baixo para cima. */
 %left '+' '-'
 %left '*' '/' '%'
@@ -28,13 +28,11 @@ extern tabela_simbolo* tabela_numeros;
 
 
 program:
-	program bloco '\n'	{ }
+	program decls '\n' bloco '\n'	{ }
 	|
 	;
 bloco:
-
-	decls stmts { }
-	
+	stmts { }
 	;
 
 decls:
@@ -67,14 +65,23 @@ stmt:
 				// localiza o simbolo na tabela de simbolos pelo nome
 				simbolo* simbolo = localizar_simbolo_nome(tabela_simbolos, (char *) $3);
 	
-  				if(simbolo->tipo == COD_INT ){
-					printf("%s INT= %d\n",simbolo->lexema, simbolo->val.dval);  
-				} 
-				else if(simbolo->tipo == COD_FLOAT){
-					printf("%s REAL= %f\n",simbolo->lexema, simbolo->val.fval);
+				if(simbolo == NULL){
+					yyerror("ERRO : Identificador não declarado");
+
 				}
+				else{
+					no_arvore *n = criar_no_write(simbolo, simbolo->tipo );
+					$$ = (int) n;
+				}
+  				// if(simbolo->tipo == COD_INT ){
+				// 	printf("%s INT= %d\n",simbolo->lexema, simbolo->val.dval);  
+				// } 
+				// else if(simbolo->tipo == COD_FLOAT){
+				// 	printf("%s REAL= %f\n",simbolo->lexema, simbolo->val.fval);
+				// }
 					
 							}
+	
 	;
 
 attr:
@@ -132,8 +139,8 @@ expr:
 											no_arvore * n = criar_no_expressao('/', (void *) $1, (void *) $3);
 											$$ = (int) n;
 	}
-	| expr '%' expr	{
-									 		no_arvore * n = criar_no_expressao('%', (void *) $1, (void *) $3);
+	| expr MOD expr	{
+									 		no_arvore * n = criar_no_expressao(MOD, (void *) $1, (void *) $3);
 											$$ = (int) n;
 					}
 	| '(' expr ')'	{$$ = $2;}

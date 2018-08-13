@@ -47,6 +47,20 @@ t_decls * criar_declaracao(simbolo * identificador, int tipo){
 	return novo;
 }
 
+no_arvore * criar_no_write(simbolo * identificador, int tipo){
+	no_arvore * novo = (no_arvore *) malloc(sizeof(no_arvore));
+	novo->tipo = DECL;
+	novo->dado.write = criar_write(identificador, tipo);
+	return novo;
+}
+
+t_write * criar_write(simbolo * identificador, int tipo){
+	t_write * novo = (t_write * ) malloc(sizeof(t_write));
+	novo->simbolo = identificador;
+	novo->tipo = tipo;
+	return novo;
+}
+
 no_arvore * criar_no_statements( void *expressao) {
 	no_arvore *novo = (no_arvore *)  malloc(sizeof(no_arvore));
 	novo->tipo = STMTS;

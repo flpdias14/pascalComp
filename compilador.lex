@@ -45,17 +45,31 @@ readln 	{
 if		{
 			return IF;
 		}
+then	{
+			return THEN;
+		}
 
 else	{
 			return ELSE;
 		}
 while	{
 			return WHILE;
-}
+		}
+mod 	{
+			return MOD;
+		}
 
-
-:=		{
+":="		{
 			return ATTR;
+		}
+"<="		{
+			return LEQ;
+		}
+">="		{
+			return GEQ;
+		}
+"<>"		{
+			return DIFF;
 		}
 
 {digito}+"."{digito}+	{ yylval = instalar_numero(tabela_numeros, yytext, COD_FLOAT);

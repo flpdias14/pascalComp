@@ -37,6 +37,11 @@ typedef struct t_bloco {
 	void *expressao;
 } t_bloco;
 
+typedef struct t_write{
+	simbolo * simbolo;
+	int tipo;
+} t_write;
+
 
 /* A union valor_sintático está sendo utilizada para 
 incorporar todos os tipos de nós declarados acima */
@@ -44,7 +49,8 @@ typedef union valor_sintatico {
 	t_expr *expr;
 	t_attr *attr;
 	t_decls *decl;
-	t_stmt *stmts;
+	t_write *write;
+	t_stmts *stmts;
 	t_bloco *bloco;
 } valor_sintatico;
 
@@ -71,6 +77,9 @@ t_attr * criar_atribuicao(simbolo *resultado, void *expressao);
 
 no_arvore * criar_no_declaracao(simbolo * identificador, int tipo);
 t_decls * criar_declaracao(simbolo * identificador, int tipo);
+
+no_arvore * criar_no_write(simbolo * identificador, int tipo);
+t_write * criar_write(simbolo * identificador, int tipo);
 
 no_arvore * criar_no_statements(void * expressao);
 t_stmts * criar_statements(void * expressao);

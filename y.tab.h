@@ -55,19 +55,22 @@ extern int yydebug;
     READLN = 265,
     WRITELN = 266,
     IF = 267,
-    ELSE = 268,
-    ATTR = 269,
-    GEQ = 270,
-    LEQ = 271,
-    NEQ = 272,
-    EXPR = 273,
-    DIV = 274,
-    DECL = 275,
-    STMTS = 276,
-    START = 277,
-    END = 278,
-    WHILE = 279,
-    UMINUS = 280
+    THEN = 268,
+    ELSE = 269,
+    ATTR = 270,
+    GEQ = 271,
+    LEQ = 272,
+    NEQ = 273,
+    EXPR = 274,
+    MOD = 275,
+    DIV = 276,
+    DECL = 277,
+    STMTS = 278,
+    START = 279,
+    END = 280,
+    WHILE = 281,
+    DIFF = 282,
+    UMINUS = 283
   };
 #endif
 /* Tokens.  */
@@ -81,19 +84,22 @@ extern int yydebug;
 #define READLN 265
 #define WRITELN 266
 #define IF 267
-#define ELSE 268
-#define ATTR 269
-#define GEQ 270
-#define LEQ 271
-#define NEQ 272
-#define EXPR 273
-#define DIV 274
-#define DECL 275
-#define STMTS 276
-#define START 277
-#define END 278
-#define WHILE 279
-#define UMINUS 280
+#define THEN 268
+#define ELSE 269
+#define ATTR 270
+#define GEQ 271
+#define LEQ 272
+#define NEQ 273
+#define EXPR 274
+#define MOD 275
+#define DIV 276
+#define DECL 277
+#define STMTS 278
+#define START 279
+#define END 280
+#define WHILE 281
+#define DIFF 282
+#define UMINUS 283
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED

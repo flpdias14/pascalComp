@@ -67,7 +67,7 @@ char * gerar_codigo_expr(no_arvore *raiz) {
 				addr3 = gerar_temp(); 				
 				printf("%s = %s %c %s\n", addr3, addr1, dado->op, addr2);
 				return addr3;
-			case '%':
+			case MOD:
 				addr1 = gerar_codigo_expr((no_arvore *) dado->dir);
 				addr2 = gerar_codigo_expr((no_arvore *) dado->esq);
 				addr3 = gerar_temp(); 				
